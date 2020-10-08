@@ -119,10 +119,17 @@ function postAllEmployees(){
         .then(function (answer) {
               //query to add departments 
             connection.query(
-                'INSERT INTO department set ? ',
+                'INSERT INTO department VALUES ? ',
                 {
-                    name: answer.name 
-                }
+                    name: answer.deptName 
+                }, 
+                (err) => {
+                    if (err) {
+                        console.log('error adding department')
+                    };
+                    console.log('Department successfully added.')
+                    start();
+                }     
             );
         }); 
     };
@@ -132,14 +139,72 @@ function postAllEmployees(){
     function addRole(){
         //inquirer what role to add 
         inquirer
-        
-        //query to add roles
-        connection.query();
+        .prompt( 
+            {
+                name:'roleName',
+                type: 'input', 
+                message: 'What role would you like to add?'
+            }, 
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'What is the salary for this role?'
+            }
+            //maybe for department_id ???
+        )
+        .then(function (answer) {
+            //query to add roles
+            connection.query(
+                'INSERT INTO role VALUES ?,? ', 
+                {
+                    title: answers.roleName, 
+                    salary: answers.salary
+                    //department_id: mayber
+                },
+                (err) => {
+                    if (err) {
+                        console.log('error adding role')
+                    };
+                    console.log('Role successfully added.')
+                    start();
+                } 
+            );
+        })
+   
     };
     
 
 //function to add employees 
     function addEmployee(){
+        inquirer 
+        .prompt(
+            {
+                name:'first_name', 
+                type: 'input', 
+                message: 'Employee first name?'
+            },
+            {
+                name:'last_name', 
+                type: 'input', 
+                message: 'Employee last name?'
+            }, 
+            {
+                name:'roleId', 
+                type: 'input', 
+                message: 'What is the employees role?'
+            }, 
+            {
+                //could be checkbox ask about 
+                name:'managerId', 
+                type: 'input', 
+                message: 'Who is the employees manager?'
+            }, 
+            {
+                name:'manager', 
+                type: 'confirm', 
+                message: 'Is this employee a manager?'
+            }
+        )
         //query to add employees 
         connection.query();
 
@@ -153,6 +218,7 @@ function postAllEmployees(){
         connection.query();
     };
  
+    // function for if the employee is an manager
+    function manager(){
 
-
-
+    };
