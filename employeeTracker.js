@@ -107,13 +107,32 @@ function postAllEmployees(){
 
 //function to add departments 
     function addDepartment(){
-        //query to add departments 
-        connection.query();
+        //inquirer ask what department to add 
+        inquirer
+        .prompt(
+            {
+                name: 'deptName', 
+                type: 'input',
+                message: 'What department would you like to add? '
+            }
+            )
+        .then(function (answer) {
+              //query to add departments 
+            connection.query(
+                'INSERT INTO department set ? ',
+                {
+                    name: answer.name 
+                }
+            );
+        }); 
     };
     
 
 //function to add roles 
     function addRole(){
+        //inquirer what role to add 
+        inquirer
+        
         //query to add roles
         connection.query();
     };
